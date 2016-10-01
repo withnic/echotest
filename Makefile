@@ -11,6 +11,8 @@ setup:
 	go get github.com/Masterminds/glide
 	go get github.com/golang/lint/golint
 	go get golang.org/x/tools/cmd/goimports
+	go get github.com/stretchr/testify/assert
+	go get github.com/labstack/echo
 	go get github.com/Songmu/make2help/cmd/make2help
 
 # テスト実行

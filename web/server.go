@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/NorifumiKawamoto/echotest/handler"
+	"github.com/NorifumiKawamoto/echotest/web/routes"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 	"github.com/labstack/echo/middleware"
@@ -9,12 +9,13 @@ import (
 
 func main() {
 	e := echo.New()
-
+	e.Debug()
+	// middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
 	// ルーティング
-	e.Get("/hello", handler.MainPage())
+	routes.Init(e)
 
 	// サーバー起動
 	e.Run(standard.New(":8080"))
