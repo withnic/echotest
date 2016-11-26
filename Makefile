@@ -13,6 +13,7 @@ setup:
 	go get golang.org/x/tools/cmd/goimports
 	go get github.com/stretchr/testify/assert
 	go get github.com/labstack/echo
+	go get github.com/mattes/migrate
 	go get github.com/Songmu/make2help/cmd/make2help
 
 # テスト実行
