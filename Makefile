@@ -13,6 +13,10 @@ setup:
 	go get golang.org/x/tools/cmd/goimports
 	go get github.com/stretchr/testify/assert
 	go get github.com/labstack/echo
+	go get github.com/mattn/go-sqlite3
+	go get github.com/jinzhu/gorm
+	go get github.com/go-gorp/gorp
+	go get bitbucket.org/liamstask/goose/cmd/goose
 	go get github.com/rubenv/sql-migrate/...
 	go get github.com/Songmu/make2help/cmd/make2help
 

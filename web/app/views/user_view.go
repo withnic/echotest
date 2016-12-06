@@ -8,6 +8,7 @@ import (
 )
 
 // template helper
-func HelloView(c echo.Context, r models.RenderObject) error {
-	return c.Render(http.StatusOK, "helloindex", r)
+func UsersView(c echo.Context, r []models.User) error {
+
+	return c.Render(http.StatusOK, "usersindex", r)
 }

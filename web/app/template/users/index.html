@@ -1,0 +1,11 @@
+{{define "usersindex"}}
+{{template "usershead" .}}
+<body>
+
+{{range .}}
+id: {{.Id}} - email: {{.Email}}</br>
+{{end}}
+
+</body>
+</html>
+{{end}}
