@@ -8,7 +8,7 @@ LDFLAGS := -X 'main.version=$(VERSION)' \
 # 必要なパッケージのインストール
 ### Setup
 setup:
-	go get github.com/Masterminds/glide
+	go get github.com/golang/dep
 	go get github.com/golang/lint/golint
 	go get golang.org/x/tools/cmd/goimports
 	go get github.com/stretchr/testify/assert
@@ -21,34 +21,34 @@ setup:
 	go get github.com/Songmu/make2help/cmd/make2help
 
 # テスト実行
-test: deps
-	go test $$(glide novendor)
+test: setup
+	go test $$(go list ./...|grep -v vendor)
 
-# glideを使って依存をインストール
+# depsを使って依存をインストール
 deps: setup
-	glide install
+	dep ensure
 
 ## Update dependencies
 update: setup
-	glide update
+	dep ensure -update
 
 ## lint
-lint: setup
-	go vet $$(glide novendor)
-	for pkg in $$(glide novendor -x); do \
-		golint -set_exit_status $$pkg || exit $$?; \
-	done
+##lint: setup
+##	go vet $$(go list ./...|grep -v vendor)
+##	for pkg in $$(glide novendor -x); do \
+##		golint -set_exit_status $$pkg || exit $$?; \
+##	done
 
 ## Format source codes
-fmt: setup
-	goimports -w $$(glide nv -x)
+##fmt: setup
+##	goimports -w $$(glide nv -x)
 
 ## buid binaries ex, make bin/echotest
 bin/%: cmd/%/main.go deps
 	go build -ldflags "$(LDFLAGS)" -o $@ $<
 
 ## Show help
-help:
-	@make2help $(MAKEFILE_LIST)
+##help:
+##	@make2help $(MAKEFILE_LIST)
 
-.PHONY: setup deps update test lint help
+##.PHONY: setup deps update test lint help

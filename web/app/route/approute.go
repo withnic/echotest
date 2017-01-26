@@ -1,11 +1,11 @@
 package approute
 
 import (
-	"github.com/NorifumiKawamoto/echotest/web/app/controllers/home"
-	"github.com/NorifumiKawamoto/echotest/web/app/controllers/users"
-	"github.com/NorifumiKawamoto/echotest/web/app/libs"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"github.com/withnic/echotest/web/app/controllers/home"
+	"github.com/withnic/echotest/web/app/controllers/users"
+	"github.com/withnic/echotest/web/app/libs"
 )
 
 // Init for app

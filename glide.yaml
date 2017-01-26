@@ -1,6 +1,0 @@
-package: github.com/NorifumiKawamoto/echotest
-import:
-- package: github.com/labstack/echo
-  subpackages:
-  - engine/standard
-  - middleware

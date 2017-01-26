@@ -1,9 +1,9 @@
 package usercontroller
 
 import (
-	"github.com/NorifumiKawamoto/echotest/web/app/models"
-	"github.com/NorifumiKawamoto/echotest/web/app/views"
 	"github.com/labstack/echo"
+	"github.com/withnic/echotest/web/app/models"
+	"github.com/withnic/echotest/web/app/views"
 )
 
 // Index home page default

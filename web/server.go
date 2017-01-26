@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/NorifumiKawamoto/echotest/web/routes"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 	"github.com/labstack/echo/middleware"
+	"github.com/withnic/echotest/web/routes"
 )
 
 func main() {

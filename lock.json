@@ -1,0 +1,106 @@
+{
+    "memo": "f1f973073c1290e51aad38acef62645ed8eb075334c9da3bafadc7e31be804b2",
+    "projects": [
+        {
+            "name": "github.com/davecgh/go-spew",
+            "version": "v1.1.0",
+            "revision": "346938d642f2ec3594ed81d874461961cd0faa76",
+            "packages": [
+                "spew"
+            ]
+        },
+        {
+            "name": "github.com/dgrijalva/jwt-go",
+            "branch": "master",
+            "revision": "24c63f56522a87ec5339cc3567883f1039378fdb",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/labstack/echo",
+            "branch": "master",
+            "revision": "9c0e9d689f87624ad01748b1a963d356afbfdceb",
+            "packages": [
+                ".",
+                "engine/standard",
+                "middleware"
+            ]
+        },
+        {
+            "name": "github.com/labstack/gommon",
+            "branch": "master",
+            "revision": "f3b1a1b3bd4726161e1200863d278df7da5e66ff",
+            "packages": [
+                "bytes",
+                "color",
+                "log",
+                "random"
+            ]
+        },
+        {
+            "name": "github.com/mattn/go-colorable",
+            "branch": "master",
+            "revision": "6c903ff4aa50920ca86087a280590b36b3152b9c",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/mattn/go-isatty",
+            "branch": "master",
+            "revision": "66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/mattn/go-sqlite3",
+            "branch": "master",
+            "revision": "e5a3c16c5c1d80b24f633e68aecd6b0702786d3d",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/pmezard/go-difflib",
+            "version": "v1.0.0",
+            "revision": "792786c7400a136282c1664665ae0a8db921c6c2",
+            "packages": [
+                "difflib"
+            ]
+        },
+        {
+            "name": "github.com/stretchr/testify",
+            "version": "v1.1.4",
+            "revision": "69483b4bd14f5845b5a1e55bca19e954e827f1d0",
+            "packages": [
+                "assert"
+            ]
+        },
+        {
+            "name": "github.com/valyala/fasttemplate",
+            "branch": "master",
+            "revision": "3b874956e03f1636d171bda64b130f9135f42cff",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "golang.org/x/net",
+            "branch": "master",
+            "revision": "f4b625ec9b21d620bb5ce57f2dfc3e08ca97fce6",
+            "packages": [
+                "context"
+            ]
+        },
+        {
+            "name": "golang.org/x/sys",
+            "branch": "master",
+            "revision": "d75a52659825e75fff6158388dddc6a5b04f9ba5",
+            "packages": [
+                "unix"
+            ]
+        }
+    ]
+}

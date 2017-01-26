@@ -5,10 +5,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/NorifumiKawamoto/echotest/web/app/libs"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 	"github.com/stretchr/testify/assert"
+	"github.com/withnic/echotest/web/app/libs"
 )
 
 func TestIndex(t *testing.T) {

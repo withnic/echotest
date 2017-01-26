@@ -3,8 +3,8 @@ package views
 import (
 	"net/http"
 
-	"github.com/NorifumiKawamoto/echotest/web/app/models"
 	"github.com/labstack/echo"
+	"github.com/withnic/echotest/web/app/models"
 )
 
 // template helper
