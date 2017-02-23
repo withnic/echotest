@@ -21,4 +21,6 @@ func Init(e *echo.Echo) {
 	e.Static("/static", "static")
 	e.GET("/", homecontroller.Index)
 	e.GET("/users", usercontroller.Index)
+	e.GET("/users/:id", usercontroller.Show)
+	e.POST("/users", usercontroller.New)
 }
