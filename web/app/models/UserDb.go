@@ -42,7 +42,7 @@ func (udb *UserDb) GetRecord(id int) User {
 	return u
 }
 
-// GetRecords is multi records
+// GetRecords gets multi records
 func (udb *UserDb) GetRecords() []User {
 	db, err := sql.Open(config.DbType, config.DbPath)
 	if err != nil {
