@@ -25,9 +25,12 @@ func Show(c echo.Context) error {
 	}
 	fmt.Print(id)
 	user := models.User{
-		Db: models.UserDb{},
+		ID: id,
 	}
-	user = user.Get(id)
+	err = user.Get()
+	if err != nil {
+		log.Fatal(err)
+	}
 	return views.UserView(c, user)
 }
 
