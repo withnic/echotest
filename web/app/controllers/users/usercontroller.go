@@ -46,6 +46,11 @@ func Create(c echo.Context) error {
 	email := c.FormValue("email")
 	u.Email = email
 
+	if err := u.Validate(); err != nil {
+		log.Fatal(err)
+		return c.String(http.StatusOK, "NG")
+	}
+
 	if err := u.Create(); err != nil {
 		log.Fatal(err)
 	}

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 
+	validator "gopkg.in/go-playground/validator.v9"
 	gorp "gopkg.in/gorp.v1"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -13,7 +14,12 @@ import (
 // User is member of this site.
 type User struct {
 	ID    int    `db:"id"`
-	Email string `form:"email" db:"email"`
+	Email string `form:"email" db:"email" validate:"required,email"`
+}
+
+func (user *User) Validate() error {
+	validate := validator.New()
+	return validate.Struct(user)
 }
 
 func initDB() *gorp.DbMap {
