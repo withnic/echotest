@@ -3,6 +3,7 @@ package usercontroller
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo"
@@ -36,15 +37,17 @@ func Show(c echo.Context) error {
 
 // New is User create Form Page
 func New(c echo.Context) error {
-	//	return views.UserNew(c)
-	return nil
+	return views.UserFormView(c)
 }
 
-func Create(u models.User) error {
-	// u := models.User{
-	// 	Id:    3,
-	// 	Email: "test@test.com",
-	// }
-	return nil
-	//	return u.Create()
+// Create is create action
+func Create(c echo.Context) error {
+	u := models.User{}
+	email := c.FormValue("email")
+	u.Email = email
+
+	if err := u.Create(); err != nil {
+		log.Fatal(err)
+	}
+	return c.String(http.StatusOK, "OK")
 }

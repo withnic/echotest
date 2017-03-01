@@ -20,6 +20,5 @@ func UserView(c echo.Context, r models.User) error {
 
 // UserFormView is User create Form Page Helper
 func UserFormView(c echo.Context) error {
-	//	return c.Render(http.StatusOk, "usernew")
-	return nil
+	return c.Render(http.StatusOK, "usernew", nil)
 }

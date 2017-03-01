@@ -13,7 +13,7 @@ import (
 // User is member of this site.
 type User struct {
 	ID    int    `db:"id"`
-	Email string `db:"email"`
+	Email string `form:"email" db:"email"`
 }
 
 func initDB() *gorp.DbMap {
