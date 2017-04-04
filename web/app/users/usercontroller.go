@@ -1,4 +1,4 @@
-package usercontroller
+package user
 
 import (
 	"fmt"
@@ -7,15 +7,13 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo"
-	"github.com/withnic/echotest/web/app/models"
-	"github.com/withnic/echotest/web/app/views"
 )
 
 // Index home page default
 func Index(c echo.Context) error {
-	user := models.User{}
+	user := User{}
 	users := user.GetAll()
-	return views.UsersView(c, users)
+	return UsersView(c, users)
 }
 
 // Show home page default
@@ -25,24 +23,24 @@ func Show(c echo.Context) error {
 		log.Fatal(err)
 	}
 	fmt.Print(id)
-	user := models.User{
+	user := User{
 		ID: id,
 	}
 	err = user.Get()
 	if err != nil {
 		log.Fatal(err)
 	}
-	return views.UserView(c, user)
+	return UserView(c, user)
 }
 
 // New is User create Form Page
 func New(c echo.Context) error {
-	return views.UserFormView(c)
+	return UserFormView(c)
 }
 
 // Create is create action
 func Create(c echo.Context) error {
-	u := models.User{}
+	u := User{}
 	email := c.FormValue("email")
 	u.Email = email
 

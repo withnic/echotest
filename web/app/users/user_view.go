@@ -1,20 +1,19 @@
-package views
+package user
 
 import (
 	"net/http"
 
 	"github.com/labstack/echo"
-	"github.com/withnic/echotest/web/app/models"
 )
 
 // UsersView is Users View Page Helper
-func UsersView(c echo.Context, r []models.User) error {
+func UsersView(c echo.Context, r []User) error {
 
-	return c.Render(http.StatusOK, "usersindex", r)
+	return c.Render(http.StatusOK, "userindex", r)
 }
 
 // UserView is User View Page Helper
-func UserView(c echo.Context, r models.User) error {
+func UserView(c echo.Context, r User) error {
 	return c.Render(http.StatusOK, "usershow", r)
 }
 
