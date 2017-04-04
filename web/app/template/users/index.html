@@ -1,11 +1,28 @@
 {{define "userindex"}}
 {{template "userhead" .}}
 <body>
+{{template "navbar" .}}
 
-{{range .}}
-id: {{.ID}} - email: {{.Email}}</br>
-{{end}}
+<div class="container">
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>email</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{range .}}
+    <tr>
+      <td><a href="/users/{{.ID}}">{{.ID}}</a></td>
+      <td> {{.Email}}</td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table>
 
+  <a href="/users/new" class="btn btn-primary">新規作成</a>
+</div>
 </body>
 </html>
 {{end}}

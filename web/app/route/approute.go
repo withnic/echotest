@@ -22,6 +22,7 @@ func Init(e *echo.Echo) {
 	e.GET("/", home.Index)
 	e.GET("/users", user.Index)
 	e.GET("/users/:id", user.Show)
+	e.DELETE("/users/:id", user.Delete)
 	e.GET("/users/new", user.New)
 	e.POST("/users", user.Create)
 }

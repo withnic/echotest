@@ -52,5 +52,28 @@ func Create(c echo.Context) error {
 	if err := u.Create(); err != nil {
 		log.Fatal(err)
 	}
-	return c.String(http.StatusOK, "OK")
+	return c.Redirect(301, "/users")
+}
+
+// Delete is delete action
+func Delete(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	user := User{
+		ID: id,
+	}
+	err = user.Get()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = user.Delete()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return c.NoContent(http.StatusNoContent)
 }

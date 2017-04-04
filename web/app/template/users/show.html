@@ -1,8 +1,37 @@
 {{define "usershow"}}
+{{template "userhead" .}}
 <body>
+{{template "navbar" .}}
+<div class="container">
+  <table class="table table-bordered">
+    <tr>
+      <th>id</th>
+      <td>{{.ID}}</td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td>{{.Email}}</td>
+    </tr>
+  </table>
+    <a href="/users/edit/{{.ID}}" class="btn btn-default">編集する</a>
 
-id: {{.ID}} - email: {{.Email}}</br>
+    <button type="submit" class="btn btn-danger del" >削除</button>
 
+</div>
+<script>
+  $(function() {
+    $(".del").on('click', function(e) {
+      e.preventDefault();
+      $.ajax({
+        url: '/users/{{.ID}}',
+        type: 'DELETE',
+        success: function(result) {
+          location.href = "/users";
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>
 {{end}}
