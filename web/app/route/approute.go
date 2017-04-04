@@ -23,7 +23,7 @@ func Init(e *echo.Echo) {
 	e.GET("/users", user.Index)
 	e.GET("/users/:id", user.Show)
 	e.GET("/users/:id/edit", user.Edit)
-	e.POST("/users/:id", user.Update)
+	e.PUT("/users/:id", user.Update)
 	e.DELETE("/users/:id", user.Delete)
 	e.GET("/users/new", user.New)
 	e.POST("/users", user.Create)

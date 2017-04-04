@@ -73,7 +73,7 @@ func Update(c echo.Context) error {
 		log.Fatal(err)
 	}
 
-	return c.Redirect(301, "/users/"+c.Param("id"))
+	return c.JSON(http.StatusOK, user)
 }
 
 // New is User create Form Page
