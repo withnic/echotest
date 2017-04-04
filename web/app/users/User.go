@@ -39,6 +39,13 @@ func (user *User) Create() error {
 	return err
 }
 
+// Update is User Data update
+func (user *User) Update() error {
+	dbmap := initDB()
+	_, err := dbmap.Update(user)
+	return err
+}
+
 // Delete is User Data Delete from DB
 func (user *User) Delete() error {
 	dbmap := initDB()

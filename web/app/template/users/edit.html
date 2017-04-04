@@ -1,0 +1,36 @@
+{{define "useredit"}}
+{{template "userhead" .}}
+<body>
+{{template "navbar" .}}
+<div class="container">
+  <form action="/users/{{.ID}}/" method="POST" class="form-horizontal">
+    <div class="form-group">
+      <label class="col-xs-2 control-label">メール</label>
+      <div class="col-xs-10">
+        <input type="text" name="email" value="{{.Email}}">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-xs-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">更新</button>
+      </div>
+    </div>
+  </form>
+  <script>
+  // $(function() {
+  //   $(".put").on('click', function(e) {
+  //     e.preventDefault();
+  //     $.ajax({
+  //       url: '/users/{{.ID}}',
+  //       type: 'PUT',
+  //       success: function(result) {
+  //         location.href = "/users";
+  //       }
+  //     });
+  //   });
+  // });
+</script>
+</body>
+</html>
+{{end}}

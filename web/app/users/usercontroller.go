@@ -33,6 +33,49 @@ func Show(c echo.Context) error {
 	return UserView(c, user)
 }
 
+// Edit is show edit form
+func Edit(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(id)
+	user := User{
+		ID: id,
+	}
+	err = user.Get()
+
+	return UserEditView(c, user)
+}
+
+// Update is update user
+func Update(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(id)
+	user := User{
+		ID: id,
+	}
+	err = user.Get()
+	if err != nil {
+		log.Fatal(err)
+	}
+	user.Email = c.FormValue("email")
+	if err := user.Validate(); err != nil {
+		log.Fatal(err)
+		return c.String(http.StatusOK, "NG")
+	}
+
+	err = user.Update()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return c.Redirect(301, "/users/"+c.Param("id"))
+}
+
 // New is User create Form Page
 func New(c echo.Context) error {
 	return UserFormView(c)
