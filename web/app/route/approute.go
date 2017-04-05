@@ -3,9 +3,9 @@ package approute
 import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/withnic/echotest/web/app/home"
+	"github.com/withnic/echotest/web/app/controllers/home"
+	"github.com/withnic/echotest/web/app/controllers/user"
 	"github.com/withnic/echotest/web/app/libs"
-	user "github.com/withnic/echotest/web/app/users"
 )
 
 // Init for app

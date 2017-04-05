@@ -6,13 +6,20 @@
   <table class="table table-bordered">
     <tr>
       <th>id</th>
-      <td>{{.ID}}</td>
+      <td>{{.u.ID}}</td>
     </tr>
     <tr>
       <th>Email</th>
-      <td>{{.Email}}</td>
+      <td>{{.u.Email}}</td>
     </tr>
   </table>
+
+  <ul>
+   {{range .mes}}
+<li> {{.ID}} - {{.Body}} - {{.CreatedAt}} </li>
+   {{end}}
+  </ul>
+
     <a href="/users/{{.ID}}/edit/" class="btn btn-default">編集する</a>
 
     <button type="submit" class="btn btn-danger del" >削除</button>

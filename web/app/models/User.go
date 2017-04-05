@@ -1,4 +1,4 @@
-package user
+package models
 
 import (
 	"database/sql"
@@ -69,4 +69,16 @@ func (user *User) GetAll() []User {
 		log.Fatal(err)
 	}
 	return users
+}
+
+func (user *User) Messages() []Message {
+	var mes []Message
+	dbmap := initDB()
+	_, err := dbmap.Select(&mes, "select * from Message where user_id = :id order by created_at desc", map[string]interface{}{
+		"id": user.ID,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	return mes
 }

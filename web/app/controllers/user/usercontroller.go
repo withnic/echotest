@@ -7,13 +7,15 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo"
+	"github.com/withnic/echotest/web/app/models"
+	"github.com/withnic/echotest/web/app/views"
 )
 
 // Index home page default
 func Index(c echo.Context) error {
-	user := User{}
+	user := models.User{}
 	users := user.GetAll()
-	return UsersView(c, users)
+	return views.UsersView(c, users)
 }
 
 // Show home page default
@@ -23,14 +25,14 @@ func Show(c echo.Context) error {
 		log.Fatal(err)
 	}
 	fmt.Print(id)
-	user := User{
+	user := models.User{
 		ID: id,
 	}
 	err = user.Get()
 	if err != nil {
 		log.Fatal(err)
 	}
-	return UserView(c, user)
+	return views.UserView(c, user)
 }
 
 // Edit is show edit form
@@ -40,12 +42,12 @@ func Edit(c echo.Context) error {
 		log.Fatal(err)
 	}
 	fmt.Print(id)
-	user := User{
+	user := models.User{
 		ID: id,
 	}
 	err = user.Get()
 
-	return UserEditView(c, user)
+	return views.UserEditView(c, user)
 }
 
 // Update is update user
@@ -55,7 +57,7 @@ func Update(c echo.Context) error {
 		log.Fatal(err)
 	}
 	fmt.Print(id)
-	user := User{
+	user := models.User{
 		ID: id,
 	}
 	err = user.Get()
@@ -78,12 +80,12 @@ func Update(c echo.Context) error {
 
 // New is User create Form Page
 func New(c echo.Context) error {
-	return UserFormView(c)
+	return views.UserFormView(c)
 }
 
 // Create is create action
 func Create(c echo.Context) error {
-	u := User{}
+	u := models.User{}
 	email := c.FormValue("email")
 	u.Email = email
 
@@ -105,7 +107,7 @@ func Delete(c echo.Context) error {
 		log.Fatal(err)
 	}
 
-	user := User{
+	user := models.User{
 		ID: id,
 	}
 	err = user.Get()

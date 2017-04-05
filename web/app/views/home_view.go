@@ -1,4 +1,4 @@
-package home
+package views
 
 import (
 	"net/http"
@@ -6,8 +6,8 @@ import (
 	"github.com/labstack/echo"
 )
 
-// template helper
-func HelloView(c echo.Context) error {
+// HomeView is root
+func HomeView(c echo.Context) error {
 	var Title interface{} = "Hello"
 	return c.Render(http.StatusOK, "homeindex", Title)
 }
