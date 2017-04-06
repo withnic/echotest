@@ -1,5 +1,7 @@
 {{define "usershow"}}
-{{template "userhead" .}}
+<!DOCTYPE html>
+<html lang="ja">
+{{template "head" .}}
 <body>
 {{template "navbar" .}}
 <div class="container">
@@ -20,7 +22,7 @@
    {{end}}
   </ul>
 
-    <a href="/users/{{.ID}}/edit/" class="btn btn-default">編集する</a>
+    <a href="/users/{{.u.ID}}/edit/" class="btn btn-default">編集する</a>
 
     <button type="submit" class="btn btn-danger del" >削除</button>
 

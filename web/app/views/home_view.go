@@ -8,6 +8,7 @@ import (
 
 // HomeView is root
 func HomeView(c echo.Context) error {
-	var Title interface{} = "Hello"
-	return c.Render(http.StatusOK, "homeindex", Title)
+	dest := make(map[string]interface{})
+	dest["Title"] = "Home"
+	return c.Render(http.StatusOK, "homeindex", dest)
 }

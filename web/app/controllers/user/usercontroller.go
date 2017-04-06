@@ -57,25 +57,27 @@ func Update(c echo.Context) error {
 		log.Fatal(err)
 	}
 	fmt.Print(id)
-	user := models.User{
+	u := models.User{
 		ID: id,
 	}
-	err = user.Get()
+	err = u.Get()
 	if err != nil {
 		log.Fatal(err)
 	}
-	user.Email = c.FormValue("email")
-	if err := user.Validate(); err != nil {
+	u.Email = c.FormValue("email")
+	u.Passwd = c.FormValue("passwd")
+
+	if err := u.Validate(); err != nil {
 		log.Fatal(err)
 		return c.String(http.StatusOK, "NG")
 	}
 
-	err = user.Update()
+	err = u.Update()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return c.JSON(http.StatusOK, user)
+	return c.JSON(http.StatusOK, u.ID)
 }
 
 // New is User create Form Page
@@ -86,8 +88,8 @@ func New(c echo.Context) error {
 // Create is create action
 func Create(c echo.Context) error {
 	u := models.User{}
-	email := c.FormValue("email")
-	u.Email = email
+	u.Email = c.FormValue("email")
+	u.Passwd = c.FormValue("passwd")
 
 	if err := u.Validate(); err != nil {
 		log.Fatal(err)
