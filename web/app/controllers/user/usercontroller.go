@@ -69,7 +69,7 @@ func Update(c echo.Context) error {
 
 	if err := u.Validate(); err != nil {
 		log.Fatal(err)
-		return c.String(http.StatusOK, "NG")
+		return c.String(http.StatusBadRequest, "NG")
 	}
 
 	err = u.Update()
@@ -93,7 +93,7 @@ func Create(c echo.Context) error {
 
 	if err := u.Validate(); err != nil {
 		log.Fatal(err)
-		return c.String(http.StatusOK, "NG")
+		return c.String(http.StatusBadRequest, "NG")
 	}
 
 	if err := u.Create(); err != nil {

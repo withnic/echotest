@@ -32,7 +32,7 @@
     $(".del").on('click', function(e) {
       e.preventDefault();
       $.ajax({
-        url: '/users/{{.ID}}',
+        url: '/users/{{.u.ID}}',
         type: 'DELETE',
         success: function(result) {
           location.href = "/users";

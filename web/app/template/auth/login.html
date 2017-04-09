@@ -5,6 +5,12 @@
 <body>
 {{template "navbar" .}}
 <div class="container">
+  {{if .Error}}
+  <div class="alert alert-danger">
+    {{.Error}}
+    </div>
+  {{end}}
+
   <form action="/signin" method="POST" class="form-horizontal">
     <div class="form-group">
       <label class="col-xs-2 control-label">メール</label>
