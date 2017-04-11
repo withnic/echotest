@@ -1,8 +1,10 @@
 {{define "usernew"}}
 {{template "head" .}}
 {{template "navbar" .}}
-
 <div class="container">
+  {{if .Error}}
+    {{template "errormessage" .}}
+  {{end}}
   <form action="/users" method="POST" class="form-horizontal">
     <div class="form-group">
       <label class="col-xs-2 control-label">メール</label>

@@ -2,6 +2,9 @@
 {{template "head" .}}
 {{template "navbar" .}}
 <div class="container">
+  {{if .Error}}
+    {{template "errormessage" .}}
+  {{end}}
   {{if .Current}}
     <div class="row">
       <aside class="col-xs-4">
@@ -9,7 +12,7 @@
           <div class="form-group">
             <input type="textarea" name="body" row="5" class="form-control">
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Post!!</button>
+          <button type="submit" class="btn btn-primary btn-block">投稿する</button>
         </form>
       </aside>
       <div class="col-xs-8">
@@ -24,7 +27,7 @@
                 post by {{.CreatedAt}}
               </div>
               <div>
-                {{.Body}}
+                <p>{{.Body}}</p>
               </div>
             </div>
           </li>

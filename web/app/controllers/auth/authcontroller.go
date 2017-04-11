@@ -20,6 +20,11 @@ func Login(c echo.Context) error {
 	return views.LoginView(c, http.StatusOK)
 }
 
+// Logout is view logout page
+func Logout(c echo.Context) error {
+	return views.LogoutView(c, http.StatusOK)
+}
+
 // Signin is add User session
 func Signin(c echo.Context) error {
 	u := models.User{}

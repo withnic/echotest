@@ -6,9 +6,10 @@ import (
 	"github.com/labstack/echo"
 )
 
-// LoginView is root
+// LoginView is show login form
 func LoginView(c echo.Context, status int) error {
 	dest := make(map[string]interface{})
+	dest["Title"] = "Login"
 	cookie, _ := c.Cookie("errormessage")
 	if cookie != nil {
 		dest["Error"] = cookie.Value
@@ -22,4 +23,12 @@ func LoginView(c echo.Context, status int) error {
 	}
 
 	return c.Render(status, "login", dest)
+}
+
+// LogoutView is show logout message
+func LogoutView(c echo.Context, status int) error {
+	dest := make(map[string]interface{})
+	dest["Title"] = "Logout"
+	deleteCookie(c, "uid")
+	return c.Render(status, "logout", dest)
 }

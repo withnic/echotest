@@ -1,13 +1,10 @@
 {{define "login"}}
-{{template "head" .Title}}
+{{template "head" .}}
 {{template "navbar" .}}
 <div class="container">
   {{if .Error}}
-  <div class="alert alert-danger">
-    {{.Error}}
-    </div>
+    {{template "errormessage" .}}
   {{end}}
-
   <form action="/signin" method="POST" class="form-horizontal">
     <div class="form-group">
       <label class="col-xs-2 control-label">メール</label>
@@ -21,10 +18,9 @@
         <input type="text" name="passwd">
       </div>
     </div>
-
     <div class="form-group">
       <div class="col-xs-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default">登録</button>
+        <button type="submit" class="btn btn-default">ログイン</button>
       </div>
     </div>
   </form>

@@ -26,6 +26,7 @@ func Init(e *echo.Echo) {
 	e.GET("/signup", user.New)
 	e.POST("/users", user.Create)
 	e.GET("/login", auth.Login)
+	e.GET("/logout", auth.Logout)
 	e.POST("/signin", auth.Signin)
 
 }
