@@ -12,6 +12,11 @@ func UsersView(c echo.Context, u []models.User) error {
 	dest := make(map[string]interface{})
 	dest["u"] = u
 	dest["Title"] = "User"
+
+	current, err := current(c)
+	if err == nil {
+		dest["Current"] = current
+	}
 	return c.Render(http.StatusOK, "userindex", dest)
 }
 
@@ -20,6 +25,12 @@ func UserEditView(c echo.Context, u models.User) error {
 	dest := make(map[string]interface{})
 	dest["u"] = u
 	dest["Title"] = "User"
+
+	current, err := current(c)
+	if err == nil {
+		dest["Current"] = current
+	}
+
 	return c.Render(http.StatusOK, "useredit", dest)
 }
 
@@ -30,6 +41,10 @@ func UserView(c echo.Context, u models.User) error {
 	dest["mes"] = u.Messages()
 	dest["Title"] = "User"
 
+	current, err := current(c)
+	if err == nil {
+		dest["Current"] = current
+	}
 	return c.Render(http.StatusOK, "usershow", dest)
 }
 
@@ -37,5 +52,9 @@ func UserView(c echo.Context, u models.User) error {
 func UserFormView(c echo.Context) error {
 	dest := make(map[string]interface{})
 	dest["Title"] = "User"
+	current, err := current(c)
+	if err == nil {
+		dest["Current"] = current
+	}
 	return c.Render(http.StatusOK, "usernew", dest)
 }

@@ -15,38 +15,41 @@ import (
 
 var store = sessions.NewCookieStore([]byte("random-string"))
 
+// Login is view login form
 func Login(c echo.Context) error {
-	return views.LoginView(c)
+	return views.LoginView(c, http.StatusOK)
 }
 
+// Signin is add User session
 func Signin(c echo.Context) error {
 	u := models.User{}
 	u.Email = c.FormValue("email")
 	error := u.GetByEmail()
-
-	if error != nil {
-		errorMessage(c)
-		return views.LoginView(c)
+	if error != nil || u.ID == 0 {
+		setSession(c, "errormessage", "not exists email or password wrong.")
+		//  httpjarを使わないとredirectでset-cookie消える
+		//  一旦スルー
+		return views.LoginView(c, http.StatusBadRequest)
 	}
 
 	password := []byte(c.FormValue("passwd"))
 	error = bcrypt.CompareHashAndPassword([]byte(u.Passwd), password)
-
 	if error != nil {
-		fmt.Println(error.Error())
-		errorMessage(c)
-		return views.LoginView(c)
+		setSession(c, "errormessage", "not exists email or password wrong.")
+		//  httpjarを使わないとredirectでset-cookie消える
+		//  一旦スルー
+		return views.LoginView(c, http.StatusBadRequest)
 	}
-
+	setSession(c, "uid", fmt.Sprint(u.ID))
 	return c.JSON(http.StatusOK, "OK")
 }
 
 //本来セッションに入れる（echoのsessionが動かないので今回はやらない)
-func errorMessage(c echo.Context) {
+func setSession(c echo.Context, name string, value string) {
 	cookie := new(http.Cookie)
-	cookie.Name = "errormessage"
+	cookie.Name = name
 	cookie.Path = "/"
-	cookie.Value = "not exists email or password wrong."
+	cookie.Value = value
 	cookie.Expires = time.Now().Add(24 * time.Hour)
 	c.SetCookie(cookie)
 }

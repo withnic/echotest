@@ -23,7 +23,7 @@ func TestIndex(t *testing.T) {
 	c := e.NewContext(standard.NewRequest(req, e.Logger()), standard.NewResponse(rec, e.Logger()))
 
 	if assert.NoError(t, Index(c)) {
-		expected := "<title>Hello, world</title>"
+		expected := "<title>Home</title>"
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.Regexp(t, expected, rec.Body.String(), "dose not has title")
 	}

@@ -14,7 +14,12 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/">Home</a></li>
+                    {{with .Current}}
+                    <li><a href="/users/{{.ID}}">{{ .Email}}</a></li>
+                    {{else}}
+                    <li><a href="/signup">SignUp</a></li>
                     <li><a href="/login">Login</a></li>
+                    {{end}}
                     <li><a href="/users">Users</a></li>
                 </ul>
             </div>

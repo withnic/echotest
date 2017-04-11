@@ -1,14 +1,44 @@
 {{define "homeindex"}}
-<!DOCTYPE html>
-<html lang="ja">
 {{template "head" .}}
-<body>
 {{template "navbar" .}}
-
 <div class="container">
-   <h1>Hello</h1>
+  {{if .Current}}
+    <div class="row">
+      <aside class="col-xs-4">
+        <form action="/messages/create" method="post" class="">
+          <div class="form-group">
+            <input type="textarea" name="body" row="5" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Post!!</button>
+        </form>
+      </aside>
+      <div class="col-xs-8">
+        <ul class="media-list">
+          {{range .Messages}}
+          <li class="media">
+            <div class="media-left">
+              <img class="media-object img-rounded" src="" alt="">
+              </div>
+            <div class="media-body">
+              <div>
+                post by {{.CreatedAt}}
+              </div>
+              <div>
+                {{.Body}}
+              </div>
+            </div>
+          </li>
+        {{end}}
+      </div>
+    </div>
+  {{else}}
+    <div class="center jumbtron">
+      <div class="text-center">
+        <h1>Welcome to the Micropost</h1>
+      </div>
+    </div>
+  {{end}}
 </div>
-
 </body>
 </html>
 {{end}}

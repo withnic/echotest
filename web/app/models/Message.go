@@ -2,6 +2,8 @@ package models
 
 import (
 	"database/sql"
+	"log"
+	"time"
 
 	validator "gopkg.in/go-playground/validator.v9"
 	gorp "gopkg.in/gorp.v1"
@@ -33,9 +35,22 @@ func initMessageDB() *gorp.DbMap {
 	return dbmap
 }
 
+// GetAll is Get All User
+func (mes *Message) GetAll() []Message {
+	var messages []Message
+	dbmap := initDB()
+	_, err := dbmap.Select(&messages, "select * from Message order by created_at desc")
+	if err != nil {
+		log.Fatal(err)
+	}
+	return messages
+}
+
 // Create is Message Data Insert DB
 func (mes *Message) Create() error {
 	dbmap := initMessageDB()
+	mes.CreatedAt = time.Now().Format("2006-01-02 15:04:05")
+
 	err := dbmap.Insert(mes)
 	return err
 }

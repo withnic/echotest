@@ -1,8 +1,5 @@
 {{define "usershow"}}
-<!DOCTYPE html>
-<html lang="ja">
 {{template "head" .}}
-<body>
 {{template "navbar" .}}
 <div class="container">
   <table class="table table-bordered">
@@ -15,12 +12,6 @@
       <td>{{.u.Email}}</td>
     </tr>
   </table>
-
-  <ul>
-   {{range .mes}}
-<li> {{.ID}} - {{.Body}} - {{.CreatedAt}} </li>
-   {{end}}
-  </ul>
 
     <a href="/users/{{.u.ID}}/edit/" class="btn btn-default">編集する</a>
 

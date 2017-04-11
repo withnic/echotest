@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/labstack/echo"
 	"github.com/withnic/echotest/web/app/models"
@@ -54,7 +55,7 @@ func Edit(c echo.Context) error {
 func Update(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		log.Fatal(err)
+		return c.String(http.StatusBadRequest, "NG")
 	}
 	fmt.Print(id)
 	u := models.User{
@@ -62,19 +63,18 @@ func Update(c echo.Context) error {
 	}
 	err = u.Get()
 	if err != nil {
-		log.Fatal(err)
+		return c.String(http.StatusNotFound, "NG")
 	}
 	u.Email = c.FormValue("email")
 	u.Passwd = c.FormValue("passwd")
 
 	if err := u.Validate(); err != nil {
-		log.Fatal(err)
 		return c.String(http.StatusBadRequest, "NG")
 	}
 
 	err = u.Update()
 	if err != nil {
-		log.Fatal(err)
+		return c.String(http.StatusBadRequest, "NG")
 	}
 
 	return c.JSON(http.StatusOK, u.ID)
@@ -92,12 +92,13 @@ func Create(c echo.Context) error {
 	u.Passwd = c.FormValue("passwd")
 
 	if err := u.Validate(); err != nil {
-		log.Fatal(err)
-		return c.String(http.StatusBadRequest, "NG")
+		setSession(c, "errormessage", "Invalid params.")
+		return views.UserFormView(c)
 	}
 
 	if err := u.Create(); err != nil {
-		log.Fatal(err)
+		setSession(c, "errormessage", "Invalid params.")
+		return views.UserFormView(c)
 	}
 	return c.Redirect(301, "/users")
 }
@@ -106,7 +107,7 @@ func Create(c echo.Context) error {
 func Delete(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		log.Fatal(err)
+		return c.String(http.StatusBadRequest, "NG")
 	}
 
 	user := models.User{
@@ -114,13 +115,23 @@ func Delete(c echo.Context) error {
 	}
 	err = user.Get()
 	if err != nil {
-		log.Fatal(err)
+		return c.String(http.StatusNotFound, "NG")
 	}
 
 	err = user.Delete()
 	if err != nil {
-		log.Fatal(err)
+		return c.String(http.StatusBadRequest, "NG")
 	}
 
 	return c.NoContent(http.StatusNoContent)
+}
+
+//本来セッションに入れる（echoのsessionが動かないので今回はやらない)
+func setSession(c echo.Context, name string, value string) {
+	cookie := new(http.Cookie)
+	cookie.Name = name
+	cookie.Path = "/"
+	cookie.Value = value
+	cookie.Expires = time.Now().Add(24 * time.Hour)
+	c.SetCookie(cookie)
 }

@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/withnic/echotest/web/app/controllers/auth"
 	"github.com/withnic/echotest/web/app/controllers/home"
+	"github.com/withnic/echotest/web/app/controllers/message"
 	"github.com/withnic/echotest/web/app/controllers/user"
 	"github.com/withnic/echotest/web/app/libs"
 )
@@ -17,8 +18,12 @@ func Init(e *echo.Echo) {
 	e.GET("/users/:id", user.Show)
 	e.GET("/users/:id/edit", user.Edit)
 	e.PUT("/users/:id", user.Update)
+
+	e.POST("/messages/create", message.Create)
+
 	e.DELETE("/users/:id", user.Delete)
-	e.GET("/users/new", user.New)
+
+	e.GET("/signup", user.New)
 	e.POST("/users", user.Create)
 	e.GET("/login", auth.Login)
 	e.POST("/signin", auth.Signin)

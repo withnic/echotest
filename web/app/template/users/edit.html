@@ -1,8 +1,5 @@
 {{define "useredit"}}
-<!DOCTYPE html>
-<html lang="ja">
 {{template "head" .}}
-<body>
 {{template "navbar" .}}
 <div class="container">
   <form action="/users/{{.u.ID}}" method="POST" class="form-horizontal form">

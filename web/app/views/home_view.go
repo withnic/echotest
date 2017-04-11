@@ -4,11 +4,19 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
+	"github.com/withnic/echotest/web/app/models"
 )
 
 // HomeView is root
-func HomeView(c echo.Context) error {
+func HomeView(c echo.Context, messages []models.Message) error {
 	dest := make(map[string]interface{})
 	dest["Title"] = "Home"
+	dest["Messages"] = messages
+
+	current, err := current(c)
+	if err == nil {
+		dest["Current"] = current
+	}
+
 	return c.Render(http.StatusOK, "homeindex", dest)
 }
