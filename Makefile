@@ -14,11 +14,8 @@ setup:
 	go get github.com/stretchr/testify/assert
 	go get github.com/labstack/echo
 	go get github.com/mattn/go-sqlite3
-	go get github.com/jinzhu/gorm
 	go get github.com/go-gorp/gorp
 	go get bitbucket.org/liamstask/goose/cmd/goose
-	go get github.com/rubenv/sql-migrate/...
-	go get github.com/Songmu/make2help/cmd/make2help
 
 # テスト実行
 test: setup
@@ -47,8 +44,3 @@ update: setup
 bin/%: cmd/%/main.go deps
 	go build -ldflags "$(LDFLAGS)" -o $@ $<
 
-## Show help
-##help:
-##	@make2help $(MAKEFILE_LIST)
-
-##.PHONY: setup deps update test lint help
