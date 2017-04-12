@@ -38,7 +38,7 @@ func initMessageDB() *gorp.DbMap {
 // GetAll is Get All User
 func (mes *Message) GetAll() []Message {
 	var messages []Message
-	dbmap := initDB()
+	dbmap := initMessageDB()
 	_, err := dbmap.Select(&messages, "select * from Message order by created_at desc")
 	if err != nil {
 		log.Fatal(err)
