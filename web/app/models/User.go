@@ -122,11 +122,11 @@ func (user *User) Followers() []User {
 	return users
 }
 
-// GetAllFollowersMessage is Get All Follow message
-func (user *User) GetAllFollowersMessage() []MessageWithUser {
+// GetAllFollowersAndMeMessage is Get All Follow message
+func (user *User) GetAllFollowersAndMeMessage() []MessageWithUser {
 	var messages []MessageWithUser
 	dbmap := initMessageDB()
-	rows, err := dbmap.Query("select Message.id, Message.body, Message.user_id, Message.created_at, User.id, User.email, User.passwd from Message inner join Follow ON Message.user_id = Follow.follow_id inner join User on Follow.follow_id = User.id where Follow.user_id = ? order by Message.created_at desc", user.ID)
+	rows, err := dbmap.Query("select Message.id, Message.body, Message.user_id, Message.created_at, User.id, User.email, User.passwd from Message inner join User on Message.user_id = User.id left join Follow ON Message.user_id = Follow.follow_id  where Follow.user_id = ? or User.id = ? order by Message.created_at desc", user.ID, user.ID)
 	if err != nil {
 		log.Fatal(err)
 	}
