@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
+	gorp "github.com/go-gorp/gorp"
 	validator "gopkg.in/go-playground/validator.v9"
-	gorp "gopkg.in/gorp.v1"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/withnic/echotest/web/app/config"
@@ -20,6 +20,13 @@ type Message struct {
 	CreatedAt string `db:"created_at"`
 }
 
+// MessageWithUser is include relationships
+type MessageWithUser struct {
+	Mes  Message
+	User User
+}
+
+// Validate is message validate
 func (mes *Message) Validate() error {
 	validate := validator.New()
 	return validate.Struct(mes)
@@ -32,6 +39,7 @@ func initMessageDB() *gorp.DbMap {
 	}
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
 	dbmap.AddTableWithName(Message{}, "Message").SetKeys(true, "id")
+	dbmap.AddTableWithName(User{}, "User").SetKeys(true, "id")
 	return dbmap
 }
 
@@ -46,11 +54,40 @@ func (mes *Message) GetAll() []Message {
 	return messages
 }
 
+func (mes *MessageWithUser) GetAllWithUser() []MessageWithUser {
+	var messages []MessageWithUser
+	dbmap := initMessageDB()
+	rows, err := dbmap.Query("select * from Message inner join User on User.id = Message.user_id order by Message.created_at desc")
+	defer rows.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for rows.Next() {
+		var mes Message
+		var user User
+		rows.Scan(
+			&mes.ID,
+			&mes.Body,
+			&mes.UserID,
+			&mes.CreatedAt,
+			&user.ID,
+			&user.Email,
+			&user.Passwd,
+		)
+		messages = append(messages, MessageWithUser{
+			Mes:  mes,
+			User: user,
+		})
+	}
+
+	return messages
+}
+
 // Create is Message Data Insert DB
 func (mes *Message) Create() error {
 	dbmap := initMessageDB()
 	mes.CreatedAt = time.Now().Format("2006-01-02 15:04:05")
-
 	err := dbmap.Insert(mes)
 	return err
 }

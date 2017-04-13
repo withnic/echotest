@@ -8,10 +8,10 @@ import (
 )
 
 // HomeView is root
-func HomeView(c echo.Context, messages []models.Message) error {
+func HomeView(c echo.Context, messages []models.MessageWithUser) error {
 	dest := make(map[string]interface{})
 	dest["Title"] = "Home"
-	dest["Messages"] = messages
+	dest["MessageWithUser"] = messages
 
 	current, err := current(c)
 	if err == nil {

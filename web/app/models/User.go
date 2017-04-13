@@ -6,8 +6,8 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
+	gorp "github.com/go-gorp/gorp"
 	validator "gopkg.in/go-playground/validator.v9"
-	gorp "gopkg.in/gorp.v1"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/withnic/echotest/web/app/config"
@@ -105,4 +105,17 @@ func (user *User) Messages() []Message {
 		log.Fatal(err)
 	}
 	return mes
+}
+
+func (user *User) Followers() []User {
+	var users []User
+	dbmap := initDB()
+	_, err := dbmap.Select(&users, "select User.id, User.email, User.passwd from Follow inner join User on user.id = Follow.follow_id  where Follow.user_id = :id order by Follow.created_at desc", map[string]interface{}{
+		"id": user.ID,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return users
 }

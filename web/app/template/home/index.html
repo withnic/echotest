@@ -17,17 +17,17 @@
       </aside>
       <div class="col-xs-8">
         <ul class="media-list">
-          {{range .Messages}}
+          {{range .MessageWithUser}}
           <li class="media">
             <div class="media-left">
               <img class="media-object img-rounded" src="" alt="">
               </div>
             <div class="media-body">
               <div>
-                post by {{.CreatedAt}}
+                post by {{.User.Email}} at {{.Mes.CreatedAt}}
               </div>
               <div>
-                <p>{{.Body}}</p>
+                <p>{{.Mes.Body}}</p>
               </div>
             </div>
           </li>

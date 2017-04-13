@@ -8,7 +8,8 @@ import (
 
 // Index home page default
 func Index(c echo.Context) error {
-	mes := models.Message{}
-	messages := mes.GetAll()
+	mes := models.MessageWithUser{}
+	messages := mes.GetAllWithUser()
+
 	return views.HomeView(c, messages)
 }
