@@ -1,24 +1,21 @@
 package models
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 
 	"golang.org/x/crypto/bcrypt"
 
-	gorp "github.com/go-gorp/gorp"
 	validator "gopkg.in/go-playground/validator.v9"
 
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/withnic/echotest/web/app/config"
 )
 
 // User is member of this site.
 type User struct {
 	ID     int    `db:"id"`
-	Email  string `form:"email" db:"email" validate:"required,email"`
-	Passwd string `form:"passwd" db:"passwd" validate:"required"`
+	Email  string `db:"email" validate:"required,email"`
+	Passwd string `db:"passwd" validate:"required"`
 	//	VPasswd string `validate:"required"`
 }
 
@@ -26,17 +23,6 @@ type User struct {
 func (user *User) Validate() error {
 	validate := validator.New()
 	return validate.Struct(user)
-}
-
-func initDB() *gorp.DbMap {
-	db, err := sql.Open(config.DbType, config.DbPath)
-	if err != nil {
-		panic(err)
-	}
-	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
-	dbmap.AddTableWithName(Message{}, "Message").SetKeys(true, "id")
-	dbmap.AddTableWithName(User{}, "User").SetKeys(true, "id")
-	return dbmap
 }
 
 // convertPass is Password exec bcrypt
@@ -125,7 +111,7 @@ func (user *User) Followers() []User {
 // GetAllFollowersAndMeMessage is Get All Follow message
 func (user *User) GetAllFollowersAndMeMessage() []MessageWithUser {
 	var messages []MessageWithUser
-	dbmap := initMessageDB()
+	dbmap := initDB()
 	rows, err := dbmap.Query("select Message.id, Message.body, Message.user_id, Message.created_at, User.id, User.email, User.passwd from Message inner join User on Message.user_id = User.id left join Follow ON Message.user_id = Follow.follow_id  where Follow.user_id = ? or User.id = ? order by Message.created_at desc", user.ID, user.ID)
 	if err != nil {
 		log.Fatal(err)
