@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
 	"golang.org/x/crypto/bcrypt"
@@ -33,6 +34,7 @@ func initDB() *gorp.DbMap {
 		panic(err)
 	}
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
+	dbmap.AddTableWithName(Message{}, "Message").SetKeys(true, "id")
 	dbmap.AddTableWithName(User{}, "User").SetKeys(true, "id")
 	return dbmap
 }
@@ -118,4 +120,34 @@ func (user *User) Followers() []User {
 	}
 
 	return users
+}
+
+// GetAllFollowersMessage is Get All Follow message
+func (user *User) GetAllFollowersMessage() []MessageWithUser {
+	var messages []MessageWithUser
+	dbmap := initMessageDB()
+	rows, err := dbmap.Query("select Message.id, Message.body, Message.user_id, Message.created_at, User.id, User.email, User.passwd from Message inner join Follow ON Message.user_id = Follow.follow_id inner join User on Follow.follow_id = User.id where Follow.user_id = ? order by Message.created_at desc", user.ID)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for rows.Next() {
+		var mes Message
+		var user User
+		rows.Scan(
+			&mes.ID,
+			&mes.Body,
+			&mes.UserID,
+			&mes.CreatedAt,
+			&user.ID,
+			&user.Email,
+			&user.Passwd,
+		)
+		fmt.Print(mes)
+		messages = append(messages, MessageWithUser{
+			Mes:  mes,
+			User: user,
+		})
+	}
+	return messages
 }

@@ -20,12 +20,6 @@ type Message struct {
 	CreatedAt string `db:"created_at"`
 }
 
-// MessageWithUser is include relationships
-type MessageWithUser struct {
-	Mes  Message
-	User User
-}
-
 // Validate is message validate
 func (mes *Message) Validate() error {
 	validate := validator.New()
@@ -51,36 +45,6 @@ func (mes *Message) GetAll() []Message {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return messages
-}
-
-func (mes *MessageWithUser) GetAllWithUser() []MessageWithUser {
-	var messages []MessageWithUser
-	dbmap := initMessageDB()
-	rows, err := dbmap.Query("select * from Message inner join User on User.id = Message.user_id order by Message.created_at desc")
-	defer rows.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for rows.Next() {
-		var mes Message
-		var user User
-		rows.Scan(
-			&mes.ID,
-			&mes.Body,
-			&mes.UserID,
-			&mes.CreatedAt,
-			&user.ID,
-			&user.Email,
-			&user.Passwd,
-		)
-		messages = append(messages, MessageWithUser{
-			Mes:  mes,
-			User: user,
-		})
-	}
-
 	return messages
 }
 
