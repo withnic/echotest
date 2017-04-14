@@ -1,6 +1,7 @@
 package message
 
 import (
+	"errors"
 	"log"
 	"net/http"
 	"strconv"
@@ -19,7 +20,7 @@ func New(c echo.Context) error {
 // Create is create action
 func Create(c echo.Context) error {
 	mes := models.Message{}
-	mes.UserID = getUserID(c)
+	mes.UserID, _ = getUserID(c)
 	mes.Body = c.FormValue("body")
 	if err := mes.Validate(); err != nil {
 		setSession(c, "errormessage", "Invalid params.")
@@ -45,7 +46,7 @@ func setSession(c echo.Context, name string, value string) {
 }
 
 // getUserID is return User.id
-func getUserID(c echo.Context) int {
+func getUserID(c echo.Context) (int, error) {
 	cookie, _ := c.Cookie("uid")
 	if cookie != nil {
 		i, _ := strconv.Atoi(cookie.Value)
@@ -56,7 +57,7 @@ func getUserID(c echo.Context) int {
 		if err != nil {
 			log.Fatal(err)
 		}
-		return u.ID
+		return u.ID, nil
 	}
-	return 0
+	return 0, errors.New("not found")
 }

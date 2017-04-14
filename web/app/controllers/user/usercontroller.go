@@ -1,6 +1,7 @@
 package user
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -25,7 +26,7 @@ func Show(c echo.Context) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(id)
+
 	user := models.User{
 		ID: id,
 	}
@@ -124,6 +125,70 @@ func Delete(c echo.Context) error {
 	}
 
 	return c.NoContent(http.StatusNoContent)
+}
+
+// Follow is User follow
+func Follow(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	uid, err := getUserID(c)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	f := models.Follow{
+		UserID:   uid,
+		FollowID: id,
+	}
+	f.Create()
+
+	return c.Redirect(301, "/")
+}
+
+// UnFollow is User follow
+func UnFollow(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	uid, err := getUserID(c)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	f := models.Follow{
+		UserID:   uid,
+		FollowID: id,
+	}
+
+	err = f.DeleteByUserFollowID()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return c.Redirect(301, "/")
+}
+
+// getUserID is return User.id
+func getUserID(c echo.Context) (int, error) {
+	cookie, _ := c.Cookie("uid")
+	if cookie != nil {
+		i, _ := strconv.Atoi(cookie.Value)
+		u := models.User{
+			ID: i,
+		}
+		err := u.Get()
+		if err != nil {
+			log.Fatal(err)
+		}
+		return u.ID, nil
+	}
+	return 0, errors.New("not found")
 }
 
 //本来セッションに入れる（echoのsessionが動かないので今回はやらない)

@@ -14,14 +14,18 @@ func Init(e *echo.Echo) {
 	libs.SetRenderer(e, "app/template/**/*.html")
 	e.Static("/static", "static")
 	e.GET("/", home.Index)
-	e.GET("/users", user.Index)
-	e.GET("/users/:id", user.Show)
+	// とりあえずPOST
+	e.GET("/users/:id/follow", user.Follow)
+	e.GET("/users/:id/unfollow", user.UnFollow)
+
 	e.GET("/users/:id/edit", user.Edit)
+	e.GET("/users/:id", user.Show)
 	e.PUT("/users/:id", user.Update)
+	e.DELETE("/users/:id", user.Delete)
+
+	e.GET("/users", user.Index)
 
 	e.POST("/messages/create", message.Create)
-
-	e.DELETE("/users/:id", user.Delete)
 
 	e.GET("/signup", user.New)
 	e.POST("/users", user.Create)
