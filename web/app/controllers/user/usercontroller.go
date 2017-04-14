@@ -145,7 +145,7 @@ func Follow(c echo.Context) error {
 	}
 	f.Create()
 
-	return c.Redirect(301, "/")
+	return c.Redirect(301, "/users/"+c.Param("id"))
 }
 
 // UnFollow is User follow
@@ -171,7 +171,7 @@ func UnFollow(c echo.Context) error {
 		log.Fatal(err)
 	}
 
-	return c.Redirect(301, "/")
+	return c.Redirect(301, "/users/"+c.Param("id"))
 }
 
 // getUserID is return User.id

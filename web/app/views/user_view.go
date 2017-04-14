@@ -44,6 +44,8 @@ func UserView(c echo.Context, u models.User) error {
 	current, err := current(c)
 	if err == nil {
 		dest["Current"] = current
+
+		dest["IsFollow"] = current.IsFollow(u.ID)
 	}
 	return c.Render(http.StatusOK, "usershow", dest)
 }

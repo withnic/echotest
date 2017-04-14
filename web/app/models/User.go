@@ -1,6 +1,7 @@
 package models
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 
@@ -112,7 +113,7 @@ func (user *User) Followers() []User {
 func (user *User) GetAllFollowersAndMeMessage() []MessageWithUser {
 	var messages []MessageWithUser
 	dbmap := initDB()
-	rows, err := dbmap.Query("select Message.id, Message.body, Message.user_id, Message.created_at, User.id, User.email, User.passwd from Message inner join User on Message.user_id = User.id left join Follow ON Message.user_id = Follow.follow_id  where Follow.user_id = ? or User.id = ? order by Message.created_at desc", user.ID, user.ID)
+	rows, err := dbmap.Query("select Message.id, Message.body, Message.user_id, Message.created_at, User.id, User.email, User.passwd from Message inner join User on Message.user_id = User.id left join Follow ON Message.user_id = Follow.follow_id  where Follow.user_id =? or User.id =? order by Message.created_at desc", user.ID, user.ID)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -136,4 +137,17 @@ func (user *User) GetAllFollowersAndMeMessage() []MessageWithUser {
 		})
 	}
 	return messages
+}
+
+// IsFollow is return bool
+func (user *User) IsFollow(id int) bool {
+	dbmap := initDB()
+	var i int
+	err := dbmap.QueryRow("select id From Follow where user_id =? and follow_id =?", user.ID, id).Scan(&i)
+
+	if err != nil && err == sql.ErrNoRows {
+		return false
+	}
+
+	return true
 }

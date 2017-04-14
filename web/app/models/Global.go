@@ -4,9 +4,11 @@ import (
 	"database/sql"
 
 	gorp "github.com/go-gorp/gorp"
+
 	"github.com/withnic/echotest/web/app/config"
 )
 
+// initDB
 func initDB() *gorp.DbMap {
 	db, err := sql.Open(config.DbType, config.DbPath)
 	if err != nil {

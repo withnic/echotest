@@ -25,6 +25,16 @@ func LoginView(c echo.Context, status int) error {
 	return c.Render(status, "login", dest)
 }
 
+func LoginedView(c echo.Context, status int) error {
+	dest := make(map[string]interface{})
+	dest["Title"] = "Logedin"
+	current, err := current(c)
+	if err == nil {
+		dest["Current"] = current
+	}
+	return c.Render(status, "logined", dest)
+}
+
 // LogoutView is show logout message
 func LogoutView(c echo.Context, status int) error {
 	dest := make(map[string]interface{})

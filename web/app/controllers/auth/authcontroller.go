@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -17,6 +18,12 @@ var store = sessions.NewCookieStore([]byte("random-string"))
 
 // Login is view login form
 func Login(c echo.Context) error {
+	_, err := getSession(c, "uid")
+	// ログイン済み
+	if err == nil {
+		return c.Redirect(301, "/")
+	}
+
 	return views.LoginView(c, http.StatusOK)
 }
 
@@ -27,6 +34,12 @@ func Logout(c echo.Context) error {
 
 // Signin is add User session
 func Signin(c echo.Context) error {
+	_, err := getSession(c, "uid")
+	// ログイン済み
+	if err == nil {
+		return c.Redirect(301, "/")
+	}
+
 	u := models.User{}
 	u.Email = c.FormValue("email")
 	error := u.GetByEmail()
@@ -46,7 +59,7 @@ func Signin(c echo.Context) error {
 		return views.LoginView(c, http.StatusBadRequest)
 	}
 	setSession(c, "uid", fmt.Sprint(u.ID))
-	return c.JSON(http.StatusOK, "OK")
+	return views.LoginedView(c, http.StatusOK)
 }
 
 //本来セッションに入れる（echoのsessionが動かないので今回はやらない)
@@ -57,4 +70,14 @@ func setSession(c echo.Context, name string, value string) {
 	cookie.Value = value
 	cookie.Expires = time.Now().Add(24 * time.Hour)
 	c.SetCookie(cookie)
+}
+
+//本来セッション取得（echoのsessionが動かないので今回はやらない)
+func getSession(c echo.Context, name string) (string, error) {
+	cookie, _ := c.Cookie(name)
+	if cookie != nil {
+		return cookie.Value, nil
+	}
+
+	return "", errors.New("not found")
 }

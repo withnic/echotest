@@ -14,9 +14,19 @@
   </table>
 
     <a href="/users/{{.u.ID}}/edit/" class="btn btn-default">編集する</a>
-
     <button type="submit" class="btn btn-danger del" >削除</button>
 
+    <!-- TODO: フォロー判定 -->
+    {{if .Current}}
+      {{if ne .Current.ID .u.ID}}
+        {{if .IsFollow}}
+          <a href="/users/{{.u.ID}}/unfollow/" class="btn btn-danger">フォローを外す</a>
+        {{else}}
+          <a href="/users/{{.u.ID}}/follow/" class="btn btn-default">フォローする</a>
+        {{end}}
+      {{end}}
+    {{end}}
+    <!-- ここまで -->
 </div>
 <script>
   $(function() {

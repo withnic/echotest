@@ -14,7 +14,6 @@ func Init(e *echo.Echo) {
 	libs.SetRenderer(e, "app/template/**/*.html")
 	e.Static("/static", "static")
 	e.GET("/", home.Index)
-	// とりあえずPOST
 	e.GET("/users/:id/follow", user.Follow)
 	e.GET("/users/:id/unfollow", user.UnFollow)
 
