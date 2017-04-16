@@ -19,7 +19,7 @@ cd ..
 go run server.go
 ```
 
-http://localhost:8081
+http://localhost:8080
 
 # やってないこと
 
