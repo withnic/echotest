@@ -1,6 +1,6 @@
 package libs
 
-import validator "gopkg.in/go-playground/validator.v9"
+import "github.com/go-playground/validator"
 
 type CustomValidator struct {
 	validator *validator.Validate

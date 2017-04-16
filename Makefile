@@ -16,6 +16,7 @@ setup:
 	go get github.com/mattn/go-sqlite3
 	go get github.com/go-gorp/gorp
 	go get bitbucket.org/liamstask/goose/cmd/goose
+	go get github.com/go-playground/validator
 
 # テスト実行
 test: setup

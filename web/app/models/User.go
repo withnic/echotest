@@ -7,8 +7,7 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	validator "gopkg.in/go-playground/validator.v9"
-
+	"github.com/go-playground/validator"
 	_ "github.com/mattn/go-sqlite3"
 )
 
